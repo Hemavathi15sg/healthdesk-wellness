@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: white;
+  --color-foreground: rgb(15 23 42);
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme inline {
+    --color-background: rgb(15 23 42);
+    --color-foreground: rgb(226 232 240);
+  }
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 215 28% 17%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 28% 17%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 28% 17%;
+  --muted: 214 32% 91%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 259 89% 52%;
+  --accent-foreground: 260 85% 97%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --primary: 259 89% 52%;
+  --primary-foreground: 260 85% 97%;
+  --secondary: 142 71% 45%;
+  --secondary-foreground: 0 0% 100%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 215 28% 6%;
+  --foreground: 213 31% 91%;
+  --card: 215 27% 11%;
+  --card-foreground: 213 31% 91%;
+  --popover: 215 27% 11%;
+  --popover-foreground: 213 31% 91%;
+  --muted: 217 32% 17%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 259 89% 58%;
+  --accent-foreground: 260 85% 11%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 210 40% 96%;
+  --border: 217 32% 17%;
+  --input: 217 32% 17%;
+  --primary: 259 89% 58%;
+  --primary-foreground: 260 85% 11%;
+  --secondary: 142 75% 35%;
+  --secondary-foreground: 0 0% 100%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ======================================
+   COMPONENT LAYER — utilities override these
+   ====================================== */
+@layer components {
+
+  .wellness-gradient {
+    @apply bg-gradient-to-br from-purple-500 via-violet-500 to-purple-600;
+  }
+
+  .wellness-card {
+    @apply rounded-2xl border border-purple-100 bg-white shadow-sm transition-all hover:shadow-md dark:border-purple-900 dark:bg-slate-900;
+  }
+
+  .wellness-badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-sm font-medium;
+  }
+
+  .progress-ring-background {
+    @apply rounded-full bg-slate-100 dark:bg-slate-800;
+  }
+
+  .progress-ring-fill {
+    @apply rounded-full transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium text-sm transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* form-input uses pr-4 only; pages add their own pl-X for icons */
+  .form-input {
+    @apply w-full pr-4 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all;
+  }
+
+  .avatar-initials {
+    @apply flex items-center justify-center rounded-full font-semibold text-white bg-gradient-to-br from-purple-500 to-violet-600 select-none shrink-0;
+  }
+
+  .stat-card {
+    @apply rounded-2xl border border-purple-100 bg-white shadow-sm transition-all hover:shadow-md dark:border-purple-900 dark:bg-slate-900 p-6 flex items-start gap-4;
+  }
+
+  .stat-card-accent-purple { @apply border-l-4 border-l-purple-500; }
+  .stat-card-accent-emerald { @apply border-l-4 border-l-emerald-500; }
+  .stat-card-accent-violet  { @apply border-l-4 border-l-violet-500; }
+  .stat-card-accent-rose    { @apply border-l-4 border-l-rose-500; }
+  .stat-card-accent-amber   { @apply border-l-4 border-l-amber-500; }
+
+  .step-connector      { @apply h-0.5 bg-slate-200 dark:bg-slate-700 flex-1; }
+  .step-connector-done { @apply h-0.5 bg-emerald-400 dark:bg-emerald-600 flex-1; }
+
+  .badge-blue    { @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400; }
+  .badge-emerald { @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400; }
+  .badge-amber   { @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400; }
+  .badge-rose    { @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400; }
+  .badge-violet  { @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400; }
+  .badge-gray    { @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400; }
+  .badge-purple  { @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400; }
+
+  .trend-up   { @apply inline-flex items-center gap-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400; }
+  .trend-down { @apply inline-flex items-center gap-0.5 text-xs font-semibold text-rose-500 dark:text-rose-400; }
+  .trend-flat { @apply inline-flex items-center gap-0.5 text-xs font-semibold text-slate-500 dark:text-slate-400; }
+
+  .skeleton {
+    @apply bg-slate-200 dark:bg-slate-700 rounded;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+  }
+
+  .data-table      { @apply w-full text-sm text-left; }
+  .data-table th   { @apply px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700; }
+  .data-table td   { @apply px-4 py-3.5 border-b border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300; }
+  .data-table tr:hover td { @apply bg-purple-50/50 dark:bg-purple-900/10; }
+  .data-table tr:last-child td { @apply border-b-0; }
+
+  .form-label {
+    @apply block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5 uppercase tracking-wide;
+  }
+
+}
+
+/* Keyframe animations (outside @layer — they're not utilities) */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.9); opacity: 0.7; }
+  70%  { transform: scale(1.2); opacity: 0; }
+  100% { transform: scale(1.2); opacity: 0; }
+}
+.pulse-ring { animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite; }
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.shimmer-bar {
+  background: linear-gradient(90deg, #a855f7 0%, #c084fc 40%, #7c3aed 60%, #a855f7 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+.shimmer-bar-emerald {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 40%, #059669 60%, #10b981 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+.shimmer-bar-amber {
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 40%, #d97706 60%, #f59e0b 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+.shimmer-bar-rose {
+  background: linear-gradient(90deg, #f43f5e 0%, #fb7185 40%, #e11d48 60%, #f43f5e 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.score-animate { animation: count-up 0.5s ease-out forwards; }
