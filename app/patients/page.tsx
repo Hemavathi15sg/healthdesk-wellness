@@ -25,9 +25,14 @@ function trendToIcon(trend: ScoreTrend) {
 }
 
 function trendToColor(trend: ScoreTrend) {
-  if (trend === "up") return "text-emerald-600 dark:text-emerald-400";
-  if (trend === "stable") return "text-amber-600 dark:text-amber-400";
-  return "text-rose-600 dark:text-rose-400";
+  switch (trend) {
+    case "up":
+      return "text-emerald-600 dark:text-emerald-400";
+    case "stable":
+      return "text-amber-600 dark:text-amber-400";
+    default:
+      return "text-rose-600 dark:text-rose-400";
+  }
 }
 
 function trendToLabel(trend: ScoreTrend) {
@@ -189,8 +194,7 @@ export default function PatientsPage() {
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>Trend</span>
-                    <span className="font-medium text-slate-800 dark:text-slate-200">
-                      <span className="sr-only">{trendToLabel(trend)}</span>
+                    <span className="font-medium text-slate-800 dark:text-slate-200" role="img" aria-label={trendToLabel(trend)}>
                       <TrendIcon className={`w-4 h-4 ${trendColor}`} aria-hidden="true" />
                     </span>
                   </div>
