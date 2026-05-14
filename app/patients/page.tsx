@@ -18,6 +18,12 @@ function scoreToTrend(score: number): ScoreTrend {
   return "down";
 }
 
+function trendToArrow(trend: ScoreTrend) {
+  if (trend === "up") return "↑";
+  if (trend === "stable") return "→";
+  return "↓";
+}
+
 export default function PatientsPage() {
   const [selectedPatient, setSelectedPatient] = useState<Wellness | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -127,6 +133,7 @@ export default function PatientsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {filteredPatients.map((patient) => {
             const ringColor = ringColorMap[patient.status] ?? "violet";
+            const trend = scoreToTrend(patient.wellnessScore);
             return (
               <button
                 key={patient.id}
@@ -165,6 +172,12 @@ export default function PatientsPage() {
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>Blood Type</span>
                     <span className="font-medium text-slate-800 dark:text-slate-200">{patient.bloodType}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                    <span>Trend</span>
+                    <span className="font-medium text-slate-800 dark:text-slate-200" aria-label={`Score trend ${trend}`}>
+                      {trendToArrow(trend)}
+                    </span>
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>Coordinator</span>
