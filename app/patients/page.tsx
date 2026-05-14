@@ -6,7 +6,7 @@ import { ProgressRing } from "@/components/ProgressRing";
 import { StatusBadge } from "@/components/StatusBadge";
 import { HealthScoreCard } from "@/components/HealthScoreCard";
 import { Wellness, WellnessStatus, ScoreTrend } from "@/lib/types";
-import { X, Mail, Phone, Target, Sparkles, Search, Filter, Users } from "lucide-react";
+import { X, Mail, Phone, Target, Sparkles, Search, Filter, Users, ArrowUp, ArrowDown, ArrowRight } from "lucide-react";
 
 function getInitials(name: string) {
   return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
@@ -18,10 +18,10 @@ function scoreToTrend(score: number): ScoreTrend {
   return "down";
 }
 
-function trendToArrow(trend: ScoreTrend) {
-  if (trend === "up") return "↑";
-  if (trend === "stable") return "→";
-  return "↓";
+function trendToIcon(trend: ScoreTrend) {
+  if (trend === "up") return ArrowUp;
+  if (trend === "stable") return ArrowRight;
+  return ArrowDown;
 }
 
 function trendToLabel(trend: ScoreTrend) {
@@ -140,6 +140,7 @@ export default function PatientsPage() {
           {filteredPatients.map((patient) => {
             const ringColor = ringColorMap[patient.status] ?? "violet";
             const trend = scoreToTrend(patient.wellnessScore);
+            const TrendIcon = trendToIcon(trend);
             return (
               <button
                 key={patient.id}
@@ -183,7 +184,7 @@ export default function PatientsPage() {
                     <span>Trend</span>
                     <span className="font-medium text-slate-800 dark:text-slate-200">
                       <span className="sr-only">{trendToLabel(trend)}</span>
-                      <span aria-hidden="true">{trendToArrow(trend)}</span>
+                      <TrendIcon className="w-4 h-4" aria-hidden="true" />
                     </span>
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
