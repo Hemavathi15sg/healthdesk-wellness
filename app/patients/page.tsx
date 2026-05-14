@@ -24,6 +24,12 @@ function trendToIcon(trend: ScoreTrend) {
   return ArrowDown;
 }
 
+function trendToColor(trend: ScoreTrend) {
+  if (trend === "up") return "text-emerald-600 dark:text-emerald-400";
+  if (trend === "stable") return "text-amber-600 dark:text-amber-400";
+  return "text-rose-600 dark:text-rose-400";
+}
+
 function trendToLabel(trend: ScoreTrend) {
   if (trend === "up") return "improving";
   if (trend === "stable") return "stable";
@@ -141,6 +147,7 @@ export default function PatientsPage() {
             const ringColor = ringColorMap[patient.status] ?? "violet";
             const trend = scoreToTrend(patient.wellnessScore);
             const TrendIcon = trendToIcon(trend);
+            const trendColor = trendToColor(trend);
             return (
               <button
                 key={patient.id}
@@ -184,7 +191,7 @@ export default function PatientsPage() {
                     <span>Trend</span>
                     <span className="font-medium text-slate-800 dark:text-slate-200">
                       <span className="sr-only">{trendToLabel(trend)}</span>
-                      <TrendIcon className="w-4 h-4" aria-hidden="true" />
+                      <TrendIcon className={`w-4 h-4 ${trendColor}`} aria-hidden="true" />
                     </span>
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
