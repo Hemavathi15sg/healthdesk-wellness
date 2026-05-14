@@ -181,8 +181,9 @@ export default function PatientsPage() {
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>Trend</span>
-                    <span className="font-medium text-slate-800 dark:text-slate-200" aria-label={`Score trend ${trendToLabel(trend)}`}>
-                      {trendToArrow(trend)}
+                    <span className="font-medium text-slate-800 dark:text-slate-200">
+                      <span className="sr-only">{trendToLabel(trend)}</span>
+                      <span aria-hidden="true">{trendToArrow(trend)}</span>
                     </span>
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
