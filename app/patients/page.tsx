@@ -6,7 +6,7 @@ import { ProgressRing } from "@/components/ProgressRing";
 import { StatusBadge } from "@/components/StatusBadge";
 import { HealthScoreCard } from "@/components/HealthScoreCard";
 import { Wellness, WellnessStatus, ScoreTrend } from "@/lib/types";
-import { X, Mail, Phone, Target, Sparkles, Search, Filter, Users } from "lucide-react";
+import { X, Mail, Phone, Target, Sparkles, Search, Filter, Users, ArrowUp, ArrowDown, ArrowRight } from "lucide-react";
 
 function getInitials(name: string) {
   return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
@@ -16,6 +16,29 @@ function scoreToTrend(score: number): ScoreTrend {
   if (score >= 75) return "up";
   if (score >= 50) return "stable";
   return "down";
+}
+
+function trendToIcon(trend: ScoreTrend) {
+  if (trend === "up") return ArrowUp;
+  if (trend === "stable") return ArrowRight;
+  return ArrowDown;
+}
+
+function trendToColor(trend: ScoreTrend) {
+  switch (trend) {
+    case "up":
+      return "text-emerald-600 dark:text-emerald-400";
+    case "stable":
+      return "text-amber-600 dark:text-amber-400";
+    default:
+      return "text-rose-600 dark:text-rose-400";
+  }
+}
+
+function trendToLabel(trend: ScoreTrend) {
+  if (trend === "up") return "improving";
+  if (trend === "stable") return "stable";
+  return "declining";
 }
 
 export default function PatientsPage() {
@@ -127,6 +150,9 @@ export default function PatientsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {filteredPatients.map((patient) => {
             const ringColor = ringColorMap[patient.status] ?? "violet";
+            const trend = scoreToTrend(patient.wellnessScore);
+            const TrendIcon = trendToIcon(trend);
+            const trendColor = trendToColor(trend);
             return (
               <button
                 key={patient.id}
@@ -165,6 +191,12 @@ export default function PatientsPage() {
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>Blood Type</span>
                     <span className="font-medium text-slate-800 dark:text-slate-200">{patient.bloodType}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                    <span>Trend</span>
+                    <span className="font-medium text-slate-800 dark:text-slate-200" role="img" aria-label={trendToLabel(trend)}>
+                      <TrendIcon className={`w-4 h-4 ${trendColor}`} aria-hidden="true" />
+                    </span>
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>Coordinator</span>
