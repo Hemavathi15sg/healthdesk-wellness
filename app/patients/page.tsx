@@ -24,6 +24,12 @@ function trendToArrow(trend: ScoreTrend) {
   return "↓";
 }
 
+function trendToLabel(trend: ScoreTrend) {
+  if (trend === "up") return "improving";
+  if (trend === "stable") return "stable";
+  return "declining";
+}
+
 export default function PatientsPage() {
   const [selectedPatient, setSelectedPatient] = useState<Wellness | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -175,7 +181,7 @@ export default function PatientsPage() {
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>Trend</span>
-                    <span className="font-medium text-slate-800 dark:text-slate-200" aria-label={`Score trend ${trend}`}>
+                    <span className="font-medium text-slate-800 dark:text-slate-200" aria-label={`Score trend ${trendToLabel(trend)}`}>
                       {trendToArrow(trend)}
                     </span>
                   </div>
